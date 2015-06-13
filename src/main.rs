@@ -40,8 +40,9 @@ fn main() {
     ];
 
     // create a fork (mutex) for each philosopher
-    let forks : Vec<_> = philosophers.iter().map(|_| Mutex::new(())).collect();
-    let forks = Arc::new(forks);
+    let forks = Arc::new(philosophers.iter()
+                                     .map(|_| Mutex::new(()))
+                                     .collect::<Vec<_>>());
 
     let handles : Vec<_> = philosophers.into_iter().map(|philosopher| {
         let t = forks.clone();
